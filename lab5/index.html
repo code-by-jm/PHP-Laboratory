@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab Exercise 5</title>
+</head>
+<body>
+
+    <h2>Welcome Form</h2>
+
+    <form id="myForm">
+        <label>Enter your name:</label>
+        <input type="text" id="name" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Response:</h3>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let name = document.getElementById("name").value;
+
+            fetch("welcome.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({name: name})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    JSON.stringify(data);
+            })
+            .catch(error => {
+                document.getElementById("result").innerText =
+                    "Error: " + error;
+            });
+        });
+    </script>
+
+</body>
+</html>
